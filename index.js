@@ -40,6 +40,16 @@ const port =process.env.PORT || 3000;
 app.get('/', (req, res) => {
   res.send('Hello World!')
 })
+app.post('/tips', async (req, res) => {
+  try {
+    const tip = req.body;
+    const tipsCollection = client.db("gardeningDB").collection("tips");
+    const result = await tipsCollection.insertOne(tip);
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ error: "Failed to add tip", details: error.message });
+  }
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`)
