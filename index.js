@@ -25,9 +25,15 @@ async function run() {
    
     // await client.connect();
     const tipsCollection = client.db('gardeningDB').collection('tips');
+    const gardenersCollection = client.db('gardeningDB').collection('gardeners');
 
      app.get('/tips', async (req, res) => {
       const corsour = await tipsCollection.find();
+      const result = await corsour.toArray();
+      res.send(result);
+    })
+     app.get('/gardeners', async (req, res) => {
+      const corsour = await gardenersCollection.find({ status: "active" }).limit(6);
       const result = await corsour.toArray();
       res.send(result);
     })
