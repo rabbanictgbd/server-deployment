@@ -22,13 +22,16 @@ const client = new MongoClient(uri, {
 async function run() {
   try {
     // Connect the client to the server (optional starting in v4.7)
-    app.get('/tips', async (req, res) => {
-      const corsour = userCollection.find();
+   
+    // await client.connect();
+    const tipsCollection = client.db('gardeningDB').collection('tips');
+
+     app.get('/tips', async (req, res) => {
+      const corsour = await tipsCollection.find();
       const result = await corsour.toArray();
       res.send(result);
     })
-    // await client.connect();
-    const tipsCollection = client.db('gardeningDB').collection('tips');
+
     app.post('/tips', async (req, res) => {
       const tip = req.body;
       const result = await tipsCollection.insertOne(tip);
