@@ -3,7 +3,7 @@ const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(cors());
-const { MongoClient, ServerApiVersion } = require("mongodb");
+const { MongoClient, ServerApiVersion, ObjectId } = require("mongodb");
 require('dotenv').config();
 
 
@@ -30,6 +30,13 @@ async function run() {
      app.get('/tips', async (req, res) => {
       const corsour = await tipsCollection.find();
       const result = await corsour.toArray();
+      res.send(result);
+    })
+     app.get('/tips/:id', async (req, res) => {
+      const id = req.params.id;
+      console.log(id);
+      const query = { _id: new ObjectId(id) };
+      const result = await tipsCollection.findOne(query);
       res.send(result);
     })
      app.get('/gardeners', async (req, res) => {
