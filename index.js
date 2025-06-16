@@ -28,8 +28,8 @@ async function run() {
     const gardenersCollection = client.db('gardeningDB').collection('gardeners');
 
      app.get('/tips', async (req, res) => {
-      const corsour = await tipsCollection.find();
-      const result = await corsour.toArray();
+      const cursor =  tipsCollection.find();
+      const result = await cursor.toArray();
       res.send(result);
     })
      app.get('/tips/:id', async (req, res) => {
@@ -40,8 +40,8 @@ async function run() {
       res.send(result);
     })
      app.get('/gardeners', async (req, res) => {
-      const corsour = await gardenersCollection.find({ status: "active" }).limit(6);
-      const result = await corsour.toArray();
+      const cursor = gardenersCollection.find({ status: "active" }).limit(6);
+      const result = await cursor.toArray();
       res.send(result);
     })
 
